@@ -40,31 +40,38 @@ public abstract class State : MonoBehaviour
 	//and therefore needs to activate (in Activate method)
 	public GameObject[] neededObjects;
 
-	//Disable all objects other
-	//than the ones the state needs
-	public virtual void OnEnable()
-	{
-		//disable all objects tagged "useful"
-		//this is so that we don't disable everything
-		//gameobjects holding networking scripts, OpenVR, HMD's etc.
-		//"useful" was chosen for lack of a better tag.
-		GameObject[] objects = GameObject.FindGameObjectsWithTag("useful");
-		foreach (GameObject gameObject in objects)
-		{
-			gameObject.SetActive(false);
-		}
+    //Disable all objects other
+    //than the ones the state needs
+    public virtual void OnEnable()
+    {
+        if (use)
+        {
+            //disable all objects tagged "useful"
+            //this is so that we don't disable everything
+            //gameobjects holding networking scripts, OpenVR, HMD's etc.
+            //"useful" was chosen for lack of a better tag.
+            GameObject[] objects = GameObject.FindGameObjectsWithTag("useful");
+            foreach (GameObject gameObject in objects)
+            {
+                gameObject.SetActive(false);
+            }
 
-		//enable only Objects needed by current state
-		foreach (GameObject gameObject in neededObjects)
-		{
-			gameObject.SetActive(true);
-		}
+            //enable only Objects needed by current state
+            foreach (GameObject gameObject in neededObjects)
+            {
+                gameObject.SetActive(true);
+            }
 
-		audioSource = GetComponent<AudioSource>();
-		AudioClip clip = (AudioClip)Resources.Load("Start");
-		audioSource.PlayOneShot(clip);
-		//Debug.Log("State: " + this.stateName);
-	}
+            audioSource = GetComponent<AudioSource>();
+            AudioClip clip = (AudioClip)Resources.Load("Start");
+            audioSource.PlayOneShot(clip);
+            //Debug.Log("State: " + this.stateName);
+        }
+        else
+        {
+            advanceState();
+        }
+    }
 
     //This function should be called whenever you want to move to the next state
 	public virtual void advanceState()

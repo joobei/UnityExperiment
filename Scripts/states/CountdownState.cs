@@ -6,35 +6,22 @@ using UnityEngine.UI;
 
 public class CountdownState : State
 {
-    public String[] introTextArray;
-    short textIndex = 0;
     public GameObject canvasObject;
     public Text textPane;
-    float countDownTimer = 1f;
+    public float countDownTimer;
 
     public override void OnEnable()
     {
         base.OnEnable();
-        textPane.text = introTextArray[0];
-        //textPane.fontSize = 33;
-        countDownTimer = 1f;
+        textPane.text = countDownTimer.ToString();
+     
     }
 
-    protected void Update()
-    {
+	public void Update()
+	{
         countDownTimer -= Time.deltaTime;
+        textPane.text = countDownTimer.ToString("f0");
 
-        if (countDownTimer <0) {
-            textIndex++;
-            if (textIndex >= introTextArray.Length)
-            {
-                textIndex = 0;
-                advanceState();
-            }
-            else {
-                textPane.text = introTextArray[textIndex];
-                countDownTimer = 1f;
-            }
-        }
+        if (countDownTimer < 0) advanceState();
     }
 }
