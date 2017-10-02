@@ -3,21 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(InstructionState))]
+[CustomEditor(typeof(State),true)]
 public class StateInspector : Editor {
+
+    bool use = true;
+    Color buttonColor = Color.green;
+    string buttonText = "Used";
 
 	public override void OnInspectorGUI()
     {
-        InstructionState instructionState = (InstructionState)target;
-
-
+        State instructionState = (State)target;
 
 		var style = new GUIStyle(GUI.skin.button);
-		style.normal.textColor = Color.green;
-        //style.normal.background = 
-        if (GUILayout.Button("Use this State", style)) 
+        style.normal.textColor = buttonColor;
+
+        if (GUILayout.Button(buttonText, style)) 
         {
-            instructionState.use = !instructionState.use;
+            if (use)
+            {
+                instructionState.use = false;
+                use = false;
+                buttonColor = Color.red;
+                buttonText = "Not Used";
+            }
+            else
+            {
+                instructionState.use = true;
+                use = true;
+                buttonColor = Color.green;
+                buttonText = "Used";
+            }
         }
         DrawDefaultInspector();
     }
