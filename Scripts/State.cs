@@ -25,7 +25,7 @@ public abstract class State : MonoBehaviour
     //Whether or not this state will be used
     //this is checked by onEnable()
     [HideInInspector]
-    public bool use;
+    public bool use = true;
 
 	AudioSource audioSource;
 	protected float timeRepeat = 1f; //to stop sounds from playing too fast - needs fixing
@@ -56,7 +56,8 @@ public abstract class State : MonoBehaviour
             {
                 //if it's not in the permanent objects array
                 //disable it
-                if(!permanentObjects.Contains(go))
+                //TODO: check what happens with MainCamera in VR
+                if(!(permanentObjects.Contains(go) || go.tag.Contains("Camera") || go.Equals(this)))
                 {
                     go.SetActive(false);    
                 }
