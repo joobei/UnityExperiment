@@ -46,14 +46,21 @@ public abstract class State : MonoBehaviour
     {
         if (use)
         {
-            //disable all objects tagged "useful"
+            //disable all objects except those tagged "permanent"
             //this is so that we don't disable 
             //gameobjects holding networking scripts, OpenVR, HMD's etc.
-            //"useful" was chosen for lack of a better tag.
-            GameObject[] objects = GameObject.FindGameObjectsWithTag("useful");
-            foreach (GameObject gobject in objects)
+            List<GameObject> permanentObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("permanent"));
+
+            GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+            foreach (GameObject go in allObjects)
             {
-                gobject.SetActive(false);
+                //if it's not in the permanent objects array
+                //disable it
+                if(!permanentObjects.Contains(go))
+                {
+                    go.SetActive(false);    
+                }
+
             }
 
             //enable only Objects needed by current state
