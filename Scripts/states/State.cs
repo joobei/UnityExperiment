@@ -47,23 +47,23 @@ public abstract class State : MonoBehaviour
         if (use)
         {
             //disable all objects tagged "useful"
-            //this is so that we don't disable everything
+            //this is so that we don't disable 
             //gameobjects holding networking scripts, OpenVR, HMD's etc.
             //"useful" was chosen for lack of a better tag.
             GameObject[] objects = GameObject.FindGameObjectsWithTag("useful");
-            foreach (GameObject gameObject in objects)
+            foreach (GameObject gobject in objects)
             {
-                gameObject.SetActive(false);
+                gobject.SetActive(false);
             }
 
             //enable only Objects needed by current state
-            foreach (GameObject gameObject in neededObjects)
+            foreach (GameObject gobject in neededObjects)
             {
-                gameObject.SetActive(true);
+                gobject.SetActive(true);
             }
 
             audioSource = GetComponent<AudioSource>();
-            AudioClip clip = (AudioClip)Resources.Load("Start");
+            AudioClip clip = (AudioClip)Resources.Load("Toot");
             audioSource.PlayOneShot(clip);
             //Debug.Log("State: " + this.stateName);
         }
@@ -72,6 +72,7 @@ public abstract class State : MonoBehaviour
             advanceState();
         }
     }
+
 
     //This function should be called whenever you want to move to the next state
 	public virtual void advanceState()
@@ -104,14 +105,7 @@ public abstract class State : MonoBehaviour
 	protected void playSound(String filename)
 	{
 		AudioClip clip = (AudioClip)Resources.Load(filename);
-		if (!audioSource.isPlaying)
-		{
-			if (timeRepeat < 0)
-			{
-				audioSource.PlayOneShot(clip);
-				timeRepeat = .5f;
-			}
-		}
+	    audioSource.PlayOneShot(clip);
 	}
 
 }
