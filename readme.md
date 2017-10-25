@@ -1,5 +1,5 @@
 # Joutai: Script-Based State Machine Management for Unity3D
-A collection of scripts for managing state transition with GameObject components.
+A collection of scripts for managing state transition.
 
 ## Usage
 * Use one of the examples or make your own child that inherits from "State" or from another of the example states.
