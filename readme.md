@@ -8,8 +8,7 @@ A collection of scripts for managing state transition.
 * Each state enables its "neededObjects" on startup and disables every other gameObject except those tagged "permanent". Permanent gameObject are meant to be objects that handle game logic/networking etc.
 * Before running the project make sure only one "State" component is Enabled (ticked). That will be the entry state
 
-Check out the wiki for more info:
-[Joutai Wiki](https://github.com/joobei/Joutai/wiki)
+Check out the [Wiki](https://github.com/joobei/Joutai/wiki) for more info:
 
 ## Intro Video
 Coming soon.
