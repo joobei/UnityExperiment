@@ -1,3 +1,4 @@
+![joutai logo](https://github.com/joobei/Joutai/wiki/joutai-logo.png)
 # Joutai: Script-Based State Machine Management for Unity3D
 A collection of scripts for managing state transition.
 
