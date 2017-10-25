@@ -24,17 +24,8 @@ public abstract class State : MonoBehaviour
 {
     //Whether or not this state will be used
     //this is checked by onEnable()
-    [HideInInspector]
+	[HideInInspector]
     public bool use = true;
-
-	AudioSource audioSource;
-	protected float timeRepeat = 1f; //to stop sounds from playing too fast - needs fixing
-	protected float triggerTime = -1f;
-
-	//public State nextState;
-
-	protected String stateName; //not really necessary... unless you want a state to behave differently
-								//depending on the state it came from.
 
 	//List of objects this state is going to use 
 	//and therefore needs to activate (in Activate method)
@@ -70,7 +61,7 @@ public abstract class State : MonoBehaviour
                 gobject.SetActive(true);
             }
 
-            audioSource = GetComponent<AudioSource>();
+          
             //Debug.Log("State: " + this.stateName);
         }
         else
@@ -102,16 +93,26 @@ public abstract class State : MonoBehaviour
 		}
 	}
 
-	//public virtual void regressState()
-	//{
-	//    enabled = false;
-	//    previousState.enabled = true;
-	//}
+    //This function should be called whenever you want to move to the next state
+    public virtual void regressState()
+    {
+        State[] states = GetComponentsInParent<State>(true);
 
-	protected void playSound(String filename)
-	{
-		AudioClip clip = (AudioClip)Resources.Load(filename);
-	    audioSource.PlayOneShot(clip);
-	}
+        for (int i = 0; i < states.Length; i++)
+        {
+            if (states[i].Equals(this))
+            {
+                //disable this state
+                this.enabled = false;
+                //if there IS a previous state, enable it.
+                if (i - 1 >= 0)
+                {
+                    states[i - 1].enabled = true;
+                    break;
+                }
+            }
+
+        }
+    }
 
 }
