@@ -71,8 +71,6 @@ public abstract class State : MonoBehaviour
             }
 
             audioSource = GetComponent<AudioSource>();
-            AudioClip clip = (AudioClip)Resources.Load("Toot");
-            audioSource.PlayOneShot(clip);
             //Debug.Log("State: " + this.stateName);
         }
         else
