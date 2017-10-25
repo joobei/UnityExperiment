@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CountdownState : State
 {
     public Text textPane;
-    public float countDownTimer;
+    public float countDownTimer = 3.0f;
 
     public override void OnEnable()
     {
