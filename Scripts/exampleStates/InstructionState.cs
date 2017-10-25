@@ -28,7 +28,6 @@ public class InstructionState : State
     //replaced by something more intelligent
     short textIndex = 0;
 
-    public GameObject canvasObject;
     public Text textPane;   
 
     public override void OnEnable()

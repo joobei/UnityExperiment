@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class CountdownState : State
 {
-    public GameObject canvasObject;
     public Text textPane;
     public float countDownTimer;
 
