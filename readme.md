@@ -12,4 +12,5 @@ A collection of scripts for managing state transition.
 Check out the [Wiki](https://github.com/joobei/Joutai/wiki) for more info:
 
 ## Intro Video
-Coming soon.
+<a href="https://youtu.be/UAwgl4wG3yg" target="_blank"><img src="https://github.com/joobei/Joutai/wiki/youtube-thumbnail.png" 
+alt="joutai video tutorial" width="240" height="180" border="10" /></a>
