@@ -31,6 +31,7 @@ public abstract class State : MonoBehaviour
 
 	//List of objects this state is going to use 
 	//and therefore needs to activate (in Activate method)
+    //[HideInInspector]
     public GameObject[] neededObjects;
 
     //Disable all objects other

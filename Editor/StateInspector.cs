@@ -36,6 +36,15 @@ public class StateInspector : Editor {
             state.use = !state.use;
         }
 
+        EditorGUILayout.BeginHorizontal();
+        foreach (GameObject go in state.neededObjects)
+        {
+        GUILayout.Box(go.name);
+            GUILayout.Box("x");
+        }
+
+        EditorGUILayout.EndHorizontal();
+
         DrawDefaultInspector();
     }
 
