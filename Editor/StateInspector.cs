@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Joutai;
 
 [CustomEditor(typeof(State),true)]
 public class StateInspector : Editor {

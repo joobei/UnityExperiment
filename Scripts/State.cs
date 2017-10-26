@@ -20,6 +20,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Joutai {
+    
 public abstract class State : MonoBehaviour
 {
     //Whether or not this state will be used
@@ -115,4 +117,5 @@ public abstract class State : MonoBehaviour
         }
     }
 
+}
 }
