@@ -31,17 +31,13 @@ public abstract class State : MonoBehaviour
 
 	//List of objects this state is going to use 
 	//and therefore needs to activate (in Activate method)
-	public GameObject[] neededObjects;
-
-    //void Awake() {
-    //    use = true;
-    //}
+    public GameObject[] neededObjects;
 
     //Disable all objects other
     //than the ones the state needs
     public virtual void OnEnable()
     {
-            if (use) //toggled through the inspector interface
+       if (use) //toggled through the inspector interface
         {
             //disable all objects except those tagged "permanent"
             //this is so that we don't disable 
@@ -77,14 +73,16 @@ public abstract class State : MonoBehaviour
     //This function should be called whenever you want to move to the next state
 	public virtual void advanceState()
 	{
+        //disable this state
+        this.enabled = false;
+
 		State[] states = GetComponentsInParent<State>(true);
 
 		for (int i = 0; i < states.Length; i++)
 		{
 		    if (states[i].Equals(this))
 		    {
-                //disable this state
-		        this.enabled = false;
+
                 //if there IS a next state, enable it.
                 if (i+1 < states.Length)
                 {
