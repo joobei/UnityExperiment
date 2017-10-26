@@ -12,9 +12,10 @@ public class CountdownState : State
 
     public override void OnEnable()
     {
+        if (use) {
         base.OnEnable();
         textPane.text = countDownTimer.ToString();
-     
+        }
     }
 
 	public void Update()

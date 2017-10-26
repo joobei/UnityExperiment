@@ -33,8 +33,11 @@ public class InstructionState : State
 
     public override void OnEnable()
     {
-        base.OnEnable();
-        textPane.text = introTextArray[textIndex];
+        if (use)
+        {
+            base.OnEnable();
+            textPane.text = introTextArray[textIndex];
+        }
     }
 
     protected void mousePressed()
