@@ -26,16 +26,16 @@ public abstract class State : MonoBehaviour
 {
     //Whether or not this state will be used
     //this is checked by onEnable()
-	[HideInInspector]
-    public bool use;
+	//[HideInInspector]
+    public bool use=true;
 
 	//List of objects this state is going to use 
 	//and therefore needs to activate (in Activate method)
 	public GameObject[] neededObjects;
 
-    void Awake() {
-        use = true;
-    }
+    //void Awake() {
+    //    use = true;
+    //}
 
     //Disable all objects other
     //than the ones the state needs

@@ -6,35 +6,36 @@ using Joutai;
 
 [CustomEditor(typeof(State),true)]
 public class StateInspector : Editor {
+    
+    Color buttonColor;
+    //string buttonText = "Used";
+    string buttonText;
 
-    bool use = true;
-    Color buttonColor = Color.green;
-    string buttonText = "Used";
-
-	public override void OnInspectorGUI()
+    public override void OnInspectorGUI()
     {
-        State instructionState = (State)target;
+		State state = (State)target;
 
 		var style = new GUIStyle(GUI.skin.button);
         style.normal.textColor = buttonColor;
 
+        if (state.use)
+        {
+            buttonText = "Used";
+            buttonColor = Color.green;
+        }
+        else 
+        { 
+            buttonText = "Not Used";
+            buttonColor = Color.red;
+        }
+
         if (GUILayout.Button(buttonText, style)) 
         {
-            if (use)
-            {
-                instructionState.use = false;
-                use = false;
-                buttonColor = Color.red;
-                buttonText = "Not Used";
-            }
-            else
-            {
-                instructionState.use = true;
-                use = true;
-                buttonColor = Color.green;
-                buttonText = "Used";
-            }
+            state.use = !state.use;
         }
+
+
+
         DrawDefaultInspector();
     }
 
