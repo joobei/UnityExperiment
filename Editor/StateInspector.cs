@@ -34,8 +34,6 @@ public class StateInspector : Editor {
             state.use = !state.use;
         }
 
-
-
         DrawDefaultInspector();
     }
 

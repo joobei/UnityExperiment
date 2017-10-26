@@ -26,7 +26,7 @@ public abstract class State : MonoBehaviour
 {
     //Whether or not this state will be used
     //this is checked by onEnable()
-	//[HideInInspector]
+	[HideInInspector]
     public bool use=true;
 
 	//List of objects this state is going to use 
@@ -41,7 +41,7 @@ public abstract class State : MonoBehaviour
     //than the ones the state needs
     public virtual void OnEnable()
     {
-        if (use)
+            if (use) //toggled through the inspector interface
         {
             //disable all objects except those tagged "permanent"
             //this is so that we don't disable 
@@ -54,7 +54,7 @@ public abstract class State : MonoBehaviour
                 //if it's not in the permanent objects array
                 //disable it
                 //TODO: check what happens with MainCamera in VR
-                    if(!(permanentObjects.Contains(go) || go.name.Contains("Camera") || go == gameObject))
+                if(!(permanentObjects.Contains(go) || go.name.Contains("Camera") || go == gameObject))
                 {
                     go.SetActive(false);    
                 }
@@ -66,9 +66,6 @@ public abstract class State : MonoBehaviour
             {
                 gobject.SetActive(true);
             }
-
-          
-            //Debug.Log("State: " + this.stateName);
         }
         else
         {
