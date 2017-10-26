@@ -33,6 +33,10 @@ public abstract class State : MonoBehaviour
 	//and therefore needs to activate (in Activate method)
 	public GameObject[] neededObjects;
 
+    void Awake() {
+        use = true;
+    }
+
     //Disable all objects other
     //than the ones the state needs
     public virtual void OnEnable()
@@ -50,7 +54,7 @@ public abstract class State : MonoBehaviour
                 //if it's not in the permanent objects array
                 //disable it
                 //TODO: check what happens with MainCamera in VR
-                if(!(permanentObjects.Contains(go) || go.tag.Contains("Camera") || go.Equals(this)))
+                    if(!(permanentObjects.Contains(go) || go.name.Contains("Camera") || go == gameObject))
                 {
                     go.SetActive(false);    
                 }
