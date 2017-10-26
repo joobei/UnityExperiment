@@ -6,7 +6,6 @@ A collection of scripts for managing state transition.
 * Use one of the examples or make your own class that inherits from "State".
 * Drag the script onto an Empty. You can have multiple copies of the same state but they should all be in the same GameObject.
 * Each state enables its 'neededObjects' on startup and disables every other gameObject except those tagged "permanent". Tag "permanent" those GameObjects that handle game logic/networking etc so that they remain active.
-  * To avoid your gameobjects becoming disabled create a new tag called "permanent" and add it to all the objects that should not be disabled/hidden.
 * Before running the project make sure only one "State" component is Enabled (ticked). That will be the entry state
 
 ## Intro Video
