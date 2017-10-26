@@ -25,7 +25,7 @@ public abstract class State : MonoBehaviour
     //Whether or not this state will be used
     //this is checked by onEnable()
 	[HideInInspector]
-    public bool use = true;
+    public bool use;
 
 	//List of objects this state is going to use 
 	//and therefore needs to activate (in Activate method)
