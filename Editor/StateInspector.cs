@@ -15,8 +15,7 @@ public class StateInspector : Editor {
     {
 		State state = (State)target;
 
-		var style = new GUIStyle(GUI.skin.button);
-        style.normal.textColor = buttonColor;
+		
 
         if (state.use)
         {
@@ -28,6 +27,9 @@ public class StateInspector : Editor {
             buttonText = "Not Used";
             buttonColor = Color.red;
         }
+
+        var style = new GUIStyle(GUI.skin.button);
+        style.normal.textColor = buttonColor;
 
         if (GUILayout.Button(buttonText, style)) 
         {
