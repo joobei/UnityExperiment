@@ -19,15 +19,18 @@
 //**********************   UNCOMMENT TO USE   ***********************
 //*******************************************************************
 /*
- 
-public abstract class ViveWandState : State
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Joutai;
 
+public abstract class ViveWandState : State
 {
+    private float timeRepeat;
+    private float triggerTime;
+
     //private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
     private SteamVR_Controller.Device device;
     private SteamVR_TrackedObject trackedObject;
@@ -39,19 +42,18 @@ using Joutai;
 
         //HACK For trigger!!!
         bool triggerClicked = false;
-        if (timeRepeat < 0)
+   
+        try
         {
-            try
-            {
 
-                trackedObject = controllerObject.GetComponent<SteamVR_TrackedObject>();
-                device = SteamVR_Controller.Input((int)trackedObject.index);
-                triggerClicked = device.GetHairTriggerDown();
-                //Vector2 triggerPosition = device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger);
-                //triggerClicked = triggerPosition.x > 0.999f; // trigger treshold seems to be 0.9f
-            }
-            catch (NullReferenceException e) { Debug.LogWarning(e.Message); }
+            trackedObject = controllerObject.GetComponent<SteamVR_TrackedObject>();
+            device = SteamVR_Controller.Input((int)trackedObject.index);
+            triggerClicked = device.GetHairTriggerDown();
+            //Vector2 triggerPosition = device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger);
+            //triggerClicked = triggerPosition.x > 0.999f; // trigger treshold seems to be 0.9f
         }
+        catch (NullReferenceException e) { Debug.LogWarning(e.Message); }
+
 
         if (triggerClicked && triggerTime < 0)
         {
@@ -71,4 +73,3 @@ using Joutai;
         //todo: handle trigger pressed
     }
 }
-*/
