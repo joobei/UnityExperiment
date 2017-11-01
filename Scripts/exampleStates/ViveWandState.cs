@@ -74,3 +74,4 @@ public abstract class ViveWandState : State
         //todo: handle trigger pressed
     }
 }
+*/
