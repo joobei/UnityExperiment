@@ -39,7 +39,8 @@ public class InstructionState : State
         GameObject mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
         canvas = CreateText(mainCamera);
         textPane = (UnityEngine.UI.Text)canvas.GetComponentInChildren(typeof(Text));
-        if (instructionTextArray.Length>0) {
+        if (instructionTextArray.Length > 0)
+        {
             textPane.text = instructionTextArray[textIndex];
         }
     }
@@ -48,22 +49,23 @@ public class InstructionState : State
     {
         if (Input.GetMouseButtonDown(0))
         {
-            localAdvance(); 
+            localAdvance();
         }
     }
 
     //advance to next text instruction
-    void localAdvance() {
-		textIndex++;
-		if (textIndex >= instructionTextArray.Length)
-		{
-			textIndex = 0;
-			advanceState();
-		}
-		else
-		{
-			textPane.text = instructionTextArray[textIndex];
-		}
+    void localAdvance()
+    {
+        textIndex++;
+        if (textIndex >= instructionTextArray.Length)
+        {
+            textIndex = 0;
+            advanceState();
+        }
+        else
+        {
+            textPane.text = instructionTextArray[textIndex];
+        }
     }
 
     GameObject CreateText(GameObject camera)
