@@ -23,21 +23,22 @@ using Joutai;
 
 public class InstructionState : State
 {
-    public String[] introTextArray;
+    public String[] instructionTextArray;
 
-    //this textIndex should ideally ber
+    //this textIndex should ideally be
     //replaced by something more intelligent
     short textIndex = 0;
 
-    public Text textPane;   
+    private Text textPane;
+    private GameObject canvas;
 
     public override void OnEnable()
     {
-        if (use)
-        {
-            base.OnEnable();
-            textPane.text = introTextArray[textIndex];
-        }
+        base.OnEnable();
+        GameObject mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
+        canvas = CreateText(mainCamera);
+        textPane = (UnityEngine.UI.Text)canvas.GetComponentInChildren(typeof(Text));
+        textPane.text = instructionTextArray[textIndex];
     }
 
     protected void mousePressed()
@@ -56,14 +57,42 @@ public class InstructionState : State
     //advance to next text instruction
     void localAdvance() {
 		textIndex++;
-		if (textIndex >= introTextArray.Length)
+		if (textIndex >= instructionTextArray.Length)
 		{
 			textIndex = 0;
 			advanceState();
 		}
 		else
 		{
-			textPane.text = introTextArray[textIndex];
+			textPane.text = instructionTextArray[textIndex];
 		}
+    }
+
+    GameObject CreateText(GameObject camera)
+    {
+        GameObject UICanvasGO = new GameObject("InstructionCanvas");
+
+        RectTransform trans = UICanvasGO.AddComponent<RectTransform>();
+        trans.anchoredPosition = new Vector2(0, 0);
+
+        UICanvasGO.AddComponent<Canvas>();
+        UICanvasGO.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+        UICanvasGO.GetComponent<Canvas>().worldCamera = camera.GetComponent<Camera>();
+        UICanvasGO.GetComponent<Canvas>().planeDistance = 100;
+
+        UICanvasGO.AddComponent<CanvasScaler>();
+
+        GameObject textGO = new GameObject("Text");
+        textGO.transform.SetParent(UICanvasGO.transform);
+        textGO.AddComponent<RectTransform>();
+        textGO.GetComponent<RectTransform>().position = Vector3.zero;
+        textGO.GetComponent<RectTransform>().localPosition = Vector3.zero;
+        textGO.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+        Text text = textGO.AddComponent<Text>();
+        text.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+        text.resizeTextForBestFit = true;
+
+
+        return UICanvasGO;
     }
 }
