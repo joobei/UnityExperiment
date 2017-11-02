@@ -44,16 +44,11 @@ public class InstructionState : State
         }
     }
 
-    protected void mousePressed()
-    {
-        localAdvance();	
-    }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            mousePressed();
+            localAdvance(); 
         }
     }
 
