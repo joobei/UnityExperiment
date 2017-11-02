@@ -23,13 +23,14 @@ using Joutai;
 
 public class InstructionState : State
 {
-    public String[] instructionTextArray;
+    [SerializeField]
+    private String[] instructionTextArray;
 
     //this textIndex should ideally be
     //replaced by something more intelligent
-    short textIndex = 0;
+    private short textIndex = 0;
 
-    private Text textPane;
+    protected Text textPane;
     private GameObject canvas;
 
     public override void OnEnable()
@@ -38,7 +39,9 @@ public class InstructionState : State
         GameObject mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
         canvas = CreateText(mainCamera);
         textPane = (UnityEngine.UI.Text)canvas.GetComponentInChildren(typeof(Text));
-        textPane.text = instructionTextArray[textIndex];
+        if (instructionTextArray.Length>0) {
+            textPane.text = instructionTextArray[textIndex];
+        }
     }
 
     protected void mousePressed()
@@ -46,7 +49,7 @@ public class InstructionState : State
         localAdvance();	
     }
 
-    public void Update()
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -94,5 +97,10 @@ public class InstructionState : State
 
 
         return UICanvasGO;
+    }
+
+    private void OnDisable()
+    {
+        Destroy(canvas);
     }
 }
