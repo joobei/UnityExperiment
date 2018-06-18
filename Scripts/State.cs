@@ -65,14 +65,14 @@ public abstract class State : MonoBehaviour
         }
         else
         {
-            advanceState();
+            AdvanceState();
         }
     }
 
 
     //This function should be called whenever you want to move to the next state
-	public virtual void advanceState()
-	{
+    public virtual void AdvanceState()
+    {
         //disable this state
         this.enabled = false;
 
@@ -95,7 +95,7 @@ public abstract class State : MonoBehaviour
 	}
 
     //This function should be called whenever you want to move to the next state
-    public virtual void regressState()
+    public virtual void RegressState()
     {
         State[] states = GetComponentsInParent<State>(true);
 

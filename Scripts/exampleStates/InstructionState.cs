@@ -49,18 +49,18 @@ public class InstructionState : State
     {
         if (Input.GetMouseButtonDown(0))
         {
-            localAdvance();
+            LocalAdvance();
         }
     }
 
     //advance to next text instruction
-    void localAdvance()
+    private void LocalAdvance()
     {
         textIndex++;
         if (textIndex >= instructionTextArray.Length)
         {
             textIndex = 0;
-            advanceState();
+            AdvanceState();
         }
         else
         {
