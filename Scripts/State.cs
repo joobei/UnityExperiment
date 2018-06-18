@@ -44,8 +44,8 @@ public abstract class State : MonoBehaviour
             //gameobjects holding networking scripts, OpenVR, HMD's etc.
             List<GameObject> permanentObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("permanent"));
 
-            GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-            foreach (GameObject go in allObjects)
+            GameObject[] rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach (GameObject go in rootObjects)
             {
                 //if it's not in the permanent objects array
                 //disable it
