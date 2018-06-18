@@ -58,14 +58,23 @@ public abstract class State : MonoBehaviour
             }
 
             //enable only Objects needed by current state
-            foreach (GameObject gobject in neededObjects)
-            {
-                gobject.SetActive(true);
-            }
+            SetActiveNeededObjects(true);
         }
         else
         {
             AdvanceState();
+        }
+    }
+
+    public void SetActiveNeededObjects(bool value)
+    {
+        foreach (GameObject gO in neededObjects)
+        {
+            gO.SetActive(value);
+            foreach (Transform child in gO.GetComponentsInChildren<Transform>())
+            {
+                child.gameObject.SetActive(value);
+            }
         }
     }
 
