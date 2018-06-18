@@ -31,13 +31,13 @@ public class InstructionState : State
     private short textIndex = 0;
 
     protected Text textPane;
-    private GameObject canvas;
+    public GameObject canvas;
 
     public override void OnEnable()
     {
         base.OnEnable();
         GameObject mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
-        canvas = CreateText(mainCamera);
+        canvas.SetActive(true);
         textPane = (UnityEngine.UI.Text)canvas.GetComponentInChildren(typeof(Text));
         if (instructionTextArray.Length > 0)
         {
@@ -98,6 +98,6 @@ public class InstructionState : State
 
     private void OnDisable()
     {
-        Destroy(canvas);
+        canvas.SetActive(false);
     }
 }
