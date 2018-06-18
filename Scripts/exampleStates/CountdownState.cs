@@ -21,6 +21,6 @@ public class CountdownState : InstructionState
         countDownTimer -= Time.deltaTime;
         textPane.text = countDownTimer.ToString("f0");
 
-        if (countDownTimer < 0) advanceState();
+        if (countDownTimer < 0) AdvanceState();
     }
 }

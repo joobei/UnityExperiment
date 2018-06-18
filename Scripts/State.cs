@@ -44,8 +44,8 @@ public abstract class State : MonoBehaviour
             //gameobjects holding networking scripts, OpenVR, HMD's etc.
             List<GameObject> permanentObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("permanent"));
 
-            GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-            foreach (GameObject go in allObjects)
+            GameObject[] rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach (GameObject go in rootObjects)
             {
                 //if it's not in the permanent objects array
                 //disable it
@@ -58,21 +58,30 @@ public abstract class State : MonoBehaviour
             }
 
             //enable only Objects needed by current state
-            foreach (GameObject gobject in neededObjects)
-            {
-                gobject.SetActive(true);
-            }
+            SetActiveNeededObjects(true);
         }
         else
         {
-            advanceState();
+            AdvanceState();
+        }
+    }
+
+    public void SetActiveNeededObjects(bool value)
+    {
+        foreach (GameObject gO in neededObjects)
+        {
+            gO.SetActive(value);
+            foreach (Transform child in gO.GetComponentsInChildren<Transform>())
+            {
+                child.gameObject.SetActive(value);
+            }
         }
     }
 
 
     //This function should be called whenever you want to move to the next state
-	public virtual void advanceState()
-	{
+    public virtual void AdvanceState()
+    {
         //disable this state
         this.enabled = false;
 
@@ -95,7 +104,7 @@ public abstract class State : MonoBehaviour
 	}
 
     //This function should be called whenever you want to move to the next state
-    public virtual void regressState()
+    public virtual void RegressState()
     {
         State[] states = GetComponentsInParent<State>(true);
 
