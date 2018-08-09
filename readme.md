@@ -1,6 +1,7 @@
 ![joutai logo](https://github.com/joobei/Joutai/wiki/joutai-logo.png)
 # Joutai: Script-Based State Machine Management for Unity3D
-A collection of scripts for managing state transition.
+A collection of scripts for managing state transition.<br/>
+Check out the [Wiki](https://github.com/joobei/Joutai/wiki) for more info.
 
 ## Usage
 * Use one of the examples or make your own class that inherits from "State".
@@ -10,5 +11,3 @@ A collection of scripts for managing state transition.
 
 ## Intro Video
 <a href="https://youtu.be/UAwgl4wG3yg" target="_blank"><img src="https://github.com/joobei/Joutai/wiki/youtube-thumbnail.png"/></a>
-
-Check out the [Wiki](https://github.com/joobei/Joutai/wiki) for more info.
