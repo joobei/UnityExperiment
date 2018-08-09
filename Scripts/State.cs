@@ -20,101 +20,119 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Joutai {
-    
-public abstract class State : MonoBehaviour
+namespace Joutai
 {
-    //Whether or not this state will be used
-    //this is checked by onEnable()
-	[HideInInspector]
-    public bool use=true;
 
-	//List of objects this state is going to use 
-	//and therefore needs to activate (in Activate method)
-    public GameObject[] neededObjects;
-
-    //Disable all objects other
-    //than the ones the state needs
-    public virtual void OnEnable()
+    public class State : MonoBehaviour
     {
-       if (use) //toggled through the inspector interface
-        {
-            //disable all objects except those tagged "permanent"
-            //this is so that we don't disable 
-            //gameobjects holding networking scripts, OpenVR, HMD's etc.
-            List<GameObject> permanentObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("permanent"));
+        //Whether or not this state will be used
+        //this is checked by onEnable()
+        [HideInInspector]
+        public bool use = true;
 
-            GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-            foreach (GameObject go in allObjects)
+        //List of objects this state is going to use 
+        //and therefore needs to activate (in Activate method)
+        public GameObject[] neededObjects;
+
+        //Disable all objects other
+        //than the ones the state needs
+        public virtual void OnEnable()
+        {
+            if (use) //toggled through the inspector interface
             {
-                //if it's not in the permanent objects array
-                //disable it
-                //TODO: check what happens with MainCamera in VR
-                if(!(permanentObjects.Contains(go) || go.name.Contains("Camera") || go == gameObject))
+                //disable all objects except those tagged "permanent"
+                //this is so that we don't disable 
+                //gameobjects holding networking scripts, OpenVR, HMD's etc.
+                List<GameObject> permanentObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("permanent"));
+
+                //GameObject[] rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+                //used to be only root objects, now checking every single object.
+                GameObject[] rootObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+
+                foreach (GameObject go in rootObjects)
                 {
-                    go.SetActive(false);    
+                    //if it's not in the permanent objects array
+                    //disable it
+                    //TODO: check what happens with MainCamera in VR
+                    if (!(permanentObjects.Contains(go) || go.name.Contains("Camera") || go == gameObject))
+                    {
+                        go.SetActive(false);
+                    }
+
+                }
+
+                //enable only Objects needed by current state
+                SetActiveNeededObjects(true);
+            }
+            else
+            {
+                AdvanceState();
+            }
+        }
+
+        public void SetActiveNeededObjects(bool value)
+        {
+            foreach (GameObject gO in neededObjects)
+            {
+                gO.SetActive(value);
+                foreach (Transform child in gO.GetComponentsInChildren<Transform>())
+                {
+                    child.gameObject.SetActive(value);
+                }
+            }
+        }
+
+
+        //This function should be called whenever you want to move to the next state
+        public virtual void AdvanceState()
+        {
+            //disable this state
+            this.enabled = false;
+            //Debug.Log(this.GetType().Name + " --> enabled = false");
+
+            State[] states = GetComponentsInParent<State>(true);
+
+            for (int i = 0; i < states.Length; i++)
+            {
+                if (states[i].Equals(this))
+                {
+                    //if there IS a next state, enable it.
+                    if (i + 1 < states.Length)
+                    {
+                        states[i + 1].enabled = true;
+                        //Debug.Log(states[i + 1].GetType().Name + "--> enabled");
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log("No more states to enable. Finished.");
+                    }
                 }
 
             }
+        }
 
-            //enable only Objects needed by current state
-            foreach (GameObject gobject in neededObjects)
+        //This function should be called whenever you want to move to the next state
+        public virtual void RegressState()
+        {
+            State[] states = GetComponentsInParent<State>(true);
+
+            for (int i = 0; i < states.Length; i++)
             {
-                gobject.SetActive(true);
+                if (states[i].Equals(this))
+                {
+                    //disable this state
+                    this.enabled = false;
+                    //if there IS a previous state, enable it.
+                    if (i - 1 >= 0)
+                    {
+                        states[i - 1].enabled = true;
+                        break;
+                    }
+                }
+
             }
         }
-        else
-        {
-            advanceState();
-        }
+
     }
-
-
-    //This function should be called whenever you want to move to the next state
-	public virtual void advanceState()
-	{
-        //disable this state
-        this.enabled = false;
-
-		State[] states = GetComponentsInParent<State>(true);
-
-		for (int i = 0; i < states.Length; i++)
-		{
-		    if (states[i].Equals(this))
-		    {
-
-                //if there IS a next state, enable it.
-                if (i+1 < states.Length)
-                {
-                    states[i + 1].enabled = true;    
-					break;
-                }
-		    }
-		    
-		}
-	}
-
-    //This function should be called whenever you want to move to the next state
-    public virtual void regressState()
-    {
-        State[] states = GetComponentsInParent<State>(true);
-
-        for (int i = 0; i < states.Length; i++)
-        {
-            if (states[i].Equals(this))
-            {
-                //disable this state
-                this.enabled = false;
-                //if there IS a previous state, enable it.
-                if (i - 1 >= 0)
-                {
-                    states[i - 1].enabled = true;
-                    break;
-                }
-            }
-
-        }
-    }
-
-}
 }
